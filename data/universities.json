@@ -1,0 +1,1706 @@
+[
+  {
+    "region": "경기",
+    "name": "가천대 체육",
+    "avg_score": 294,
+    "top_score": 273,
+    "safe_score": 984,
+    "expected_score": 973,
+    "recruitment": {
+      "2026": 40,
+      "2025": 40,
+      "2024": 30,
+      "2023": 20
+    },
+    "supplement": {
+      "2025": 3,
+      "2024": 4,
+      "2023": 14
+    },
+    "competition": {
+      "2025": 37,
+      "2024": 20
+    },
+    "notes": "49.18"
+  },
+  {
+    "region": "강원",
+    "name": "가톨릭관동대 체육교육",
+    "avg_score": 661,
+    "top_score": 621,
+    "safe_score": 945,
+    "expected_score": 921,
+    "recruitment": {
+      "2026": 20,
+      "2025": 20,
+      "2024": 20,
+      "2023": 20
+    },
+    "supplement": {
+      "2025": 35,
+      "2024": 30,
+      "2023": 26
+    },
+    "competition": {
+      "2025": 27,
+      "2024": 20
+    },
+    "notes": "8.05"
+  },
+  {
+    "region": "강원",
+    "name": "가톨릭관동대 스포츠레저",
+    "avg_score": 485,
+    "top_score": 414,
+    "safe_score": 835,
+    "expected_score": 814,
+    "recruitment": {
+      "2026": 41,
+      "2025": 40,
+      "2024": 40,
+      "2023": 96
+    },
+    "supplement": {
+      "2025": 38,
+      "2024": 30,
+      "2023": 46
+    },
+    "competition": {
+      "2025": 7,
+      "2024": 59
+    },
+    "notes": "2.68"
+  },
+  {
+    "region": "강원",
+    "name": "가톨릭관동대  스포츠재활의학",
+    "avg_score": 500,
+    "top_score": 455,
+    "safe_score": 878,
+    "expected_score": 855,
+    "recruitment": {
+      "2026": 40,
+      "2025": 40,
+      "2024": 31,
+      "2023": null
+    },
+    "supplement": {
+      "2025": 43,
+      "2024": 38,
+      "2023": 39
+    },
+    "competition": {
+      "2025": 49,
+      "2024": 46
+    },
+    "notes": "5.28"
+  },
+  {
+    "region": "경기",
+    "name": "강남대 체육",
+    "avg_score": 291,
+    "top_score": 271,
+    "safe_score": 979,
+    "expected_score": 971,
+    "recruitment": {
+      "2026": 29,
+      "2025": 29,
+      "2024": 29,
+      "2023": 29
+    },
+    "supplement": {
+      "2025": 26,
+      "2024": 16,
+      "2023": 19
+    },
+    "competition": {
+      "2025": 38,
+      "2024": 36
+    },
+    "notes": "23.62"
+  },
+  {
+    "region": "충북",
+    "name": "건국대(글) 스포츠건강",
+    "avg_score": 165,
+    "top_score": 121,
+    "safe_score": 951,
+    "expected_score": 921,
+    "recruitment": {
+      "2026": 20,
+      "2025": 20,
+      "2024": 22,
+      "2023": 18
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 3,
+      "2023": 14
+    },
+    "competition": {
+      "2025": 15,
+      "2024": 15
+    },
+    "notes": "28.35"
+  },
+  {
+    "region": "경기",
+    "name": "경기대 스포츠과학",
+    "avg_score": 29.49,
+    "top_score": 29.17,
+    "safe_score": 99.3,
+    "expected_score": 99.17,
+    "recruitment": {
+      "2026": 19,
+      "2025": 10,
+      "2024": 10,
+      "2023": 10
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 4,
+      "2024": 13
+    },
+    "notes": "62.00"
+  },
+  {
+    "region": "경기",
+    "name": "경기대 체육",
+    "avg_score": null,
+    "top_score": null,
+    "safe_score": null,
+    "expected_score": null,
+    "recruitment": {
+      "2026": "미선발",
+      "2025": null,
+      "2024": 5,
+      "2023": 5
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 3,
+      "2024": "미선발"
+    },
+    "notes": null
+  },
+  {
+    "region": "충북",
+    "name": "극동대 스포츠재활",
+    "avg_score": 160,
+    "top_score": 116,
+    "safe_score": 920,
+    "expected_score": 889.33,
+    "recruitment": {
+      "2026": 29,
+      "2025": 16,
+      "2024": 26,
+      "2023": 30
+    },
+    "supplement": {
+      "2025": 25,
+      "2024": 53,
+      "2023": 44
+    },
+    "competition": {
+      "2025": "미달",
+      "2024": 1
+    },
+    "notes": "2.44"
+  },
+  {
+    "region": "충남",
+    "name": "나사렛대 재활스포츠",
+    "avg_score": 85,
+    "top_score": 72,
+    "safe_score": 965,
+    "expected_score": 923,
+    "recruitment": {
+      "2026": 55,
+      "2025": 30,
+      "2024": 30,
+      "2023": 30
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 27,
+      "2023": 36
+    },
+    "competition": {
+      "2025": 48,
+      "2024": 39
+    },
+    "notes": "13.20"
+  },
+  {
+    "region": "충남",
+    "name": "남서울대 스포츠건강관리",
+    "avg_score": 210,
+    "top_score": 154,
+    "safe_score": 851,
+    "expected_score": 805,
+    "recruitment": {
+      "2026": 42,
+      "2025": 41,
+      "2024": 36,
+      "2023": 38
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 26
+    },
+    "competition": {
+      "2025": 86,
+      "2024": 52
+    },
+    "notes": "7.76"
+  },
+  {
+    "region": "충남",
+    "name": "남서울대 스포츠비즈니스",
+    "avg_score": 210,
+    "top_score": 136,
+    "safe_score": 840,
+    "expected_score": 784,
+    "recruitment": {
+      "2026": 42,
+      "2025": 40,
+      "2024": 35,
+      "2023": 38
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 22
+    },
+    "competition": {
+      "2025": 50,
+      "2024": 37
+    },
+    "notes": "4.93"
+  },
+  {
+    "region": "경기",
+    "name": "단국대 체육교육",
+    "avg_score": 686,
+    "top_score": 668,
+    "safe_score": 982,
+    "expected_score": 968,
+    "recruitment": {
+      "2026": 10,
+      "2025": 10,
+      "2024": null,
+      "2023": null
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": null,
+      "2024": 2
+    },
+    "notes": "42.50"
+  },
+  {
+    "region": "충남",
+    "name": "단국대 생활체육",
+    "avg_score": 190,
+    "top_score": 180,
+    "safe_score": 990,
+    "expected_score": 980,
+    "recruitment": {
+      "2026": 14,
+      "2025": 14,
+      "2024": 15,
+      "2023": 15
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 8,
+      "2024": 12
+    },
+    "notes": "42.36"
+  },
+  {
+    "region": "충남",
+    "name": "단국대 운동처방재활",
+    "avg_score": 194.8,
+    "top_score": 192.2,
+    "safe_score": null,
+    "expected_score": null,
+    "recruitment": {
+      "2026": "미선발",
+      "2025": 5,
+      "2024": 5,
+      "2023": 6
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 4,
+      "2024": 5
+    },
+    "notes": "36.20"
+  },
+  {
+    "region": "대전",
+    "name": "대전대 스포츠건강재활",
+    "avg_score": 352,
+    "top_score": 330,
+    "safe_score": 942,
+    "expected_score": 930,
+    "recruitment": {
+      "2026": 27,
+      "2025": 25,
+      "2024": 25,
+      "2023": 25
+    },
+    "supplement": {
+      "2025": 17,
+      "2024": 23,
+      "2023": 31
+    },
+    "competition": {
+      "2025": 37,
+      "2024": 28
+    },
+    "notes": "8.88"
+  },
+  {
+    "region": "대전",
+    "name": "대전대 스포츠운동과학",
+    "avg_score": 348,
+    "top_score": 320,
+    "safe_score": 938,
+    "expected_score": 920,
+    "recruitment": {
+      "2026": 32,
+      "2025": 32,
+      "2024": 23,
+      "2023": 20
+    },
+    "supplement": {
+      "2025": 21,
+      "2024": 20,
+      "2023": 17
+    },
+    "competition": {
+      "2025": 35,
+      "2024": 22
+    },
+    "notes": "3.81"
+  },
+  {
+    "region": "경기",
+    "name": "대진대 스포츠겅강과학",
+    "avg_score": 184,
+    "top_score": 179.3,
+    "safe_score": 984,
+    "expected_score": 979.3,
+    "recruitment": {
+      "2026": 25,
+      "2025": 25,
+      "2024": 25,
+      "2023": 22
+    },
+    "supplement": {
+      "2025": 14,
+      "2024": 15,
+      "2023": 10
+    },
+    "competition": {
+      "2025": 32,
+      "2024": 22
+    },
+    "notes": "10.48"
+  },
+  {
+    "region": "서울",
+    "name": "동국대 체육교육",
+    "avg_score": 298.4,
+    "top_score": 294.3,
+    "safe_score": 996.5,
+    "expected_score": 994.3,
+    "recruitment": {
+      "2026": 22,
+      "2025": 23,
+      "2024": 23,
+      "2023": 23
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 0,
+      "2024": 0
+    },
+    "notes": "30.17"
+  },
+  {
+    "region": "서울",
+    "name": "동덕여대 체육",
+    "avg_score": 396.8,
+    "top_score": 392.8,
+    "safe_score": null,
+    "expected_score": null,
+    "recruitment": {
+      "2026": "일반학생미선발",
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 1
+    },
+    "competition": {
+      "2025": null,
+      "2024": null
+    },
+    "notes": null
+  },
+  {
+    "region": "대전",
+    "name": "목원대 스포츠건강관리",
+    "avg_score": 86,
+    "top_score": 50,
+    "safe_score": 918,
+    "expected_score": 888,
+    "recruitment": {
+      "2026": 30,
+      "2025": 33,
+      "2024": 33,
+      "2023": 54
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 72
+    },
+    "competition": {
+      "2025": 126,
+      "2024": 76
+    },
+    "notes": "6.90"
+  },
+  {
+    "region": "충남",
+    "name": "백석대 특수체육교육",
+    "avg_score": 552,
+    "top_score": 516,
+    "safe_score": 930.6700000000001,
+    "expected_score": 916,
+    "recruitment": {
+      "2026": 27,
+      "2025": 27,
+      "2024": 27,
+      "2023": 26
+    },
+    "supplement": {
+      "2025": 25,
+      "2024": 26,
+      "2023": 20
+    },
+    "competition": {
+      "2025": 28,
+      "2024": 16
+    },
+    "notes": "6.15"
+  },
+  {
+    "region": "충남",
+    "name": "백석대 스포츠과학",
+    "avg_score": 349,
+    "top_score": 323,
+    "safe_score": 941,
+    "expected_score": 923,
+    "recruitment": {
+      "2026": 73,
+      "2025": 73,
+      "2024": 75,
+      "2023": 46
+    },
+    "supplement": {
+      "2025": 33,
+      "2024": 22,
+      "2023": 67
+    },
+    "competition": {
+      "2025": 42,
+      "2024": 36
+    },
+    "notes": "10.96"
+  },
+  {
+    "region": "서울",
+    "name": "삼육대 체육",
+    "avg_score": 392,
+    "top_score": 386,
+    "safe_score": 990,
+    "expected_score": 986,
+    "recruitment": {
+      "2026": 12,
+      "2025": 10,
+      "2024": 11,
+      "2023": 9
+    },
+    "supplement": {
+      "2025": 4,
+      "2024": 12,
+      "2023": 10
+    },
+    "competition": {
+      "2025": 4,
+      "2024": 4
+    },
+    "notes": "13.70"
+  },
+  {
+    "region": "서울",
+    "name": "상명대 스포츠건강",
+    "avg_score": 282,
+    "top_score": 235,
+    "safe_score": 961,
+    "expected_score": 935,
+    "recruitment": {
+      "2026": 12,
+      "2025": 12,
+      "2024": null,
+      "2023": null
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": null,
+      "2024": 12
+    },
+    "notes": "65.92"
+  },
+  {
+    "region": "충남",
+    "name": "상명대(천안) 스포츠융합",
+    "avg_score": 357,
+    "top_score": 288,
+    "safe_score": 910,
+    "expected_score": 888,
+    "recruitment": {
+      "2026": 38,
+      "2025": 38,
+      "2024": 38,
+      "2023": 43
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 36,
+      "2023": 29
+    },
+    "competition": {
+      "2025": 37,
+      "2024": 23
+    },
+    "notes": "7.68"
+  },
+  {
+    "region": "강원",
+    "name": "상지대 체육",
+    "avg_score": 233,
+    "top_score": 197,
+    "safe_score": 920,
+    "expected_score": 897,
+    "recruitment": {
+      "2026": 40,
+      "2025": 40,
+      "2024": 55,
+      "2023": 60
+    },
+    "supplement": {
+      "2025": 37,
+      "2024": 64,
+      "2023": 62
+    },
+    "competition": {
+      "2025": 40,
+      "2024": 56
+    },
+    "notes": "4.28"
+  },
+  {
+    "region": "서울",
+    "name": "서경대 스포츠&테크놀러지",
+    "avg_score": 294,
+    "top_score": 281,
+    "safe_score": 687.33,
+    "expected_score": 680.67,
+    "recruitment": {
+      "2026": 30,
+      "2025": 30,
+      "2024": null,
+      "2023": null
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 7,
+      "2024": 2
+    },
+    "notes": "24.70"
+  },
+  {
+    "region": "서울",
+    "name": "서울여대 스포츠운동과학",
+    "avg_score": 58,
+    "top_score": 55.49,
+    "safe_score": 97.7,
+    "expected_score": 95.49000000000001,
+    "recruitment": {
+      "2026": 10,
+      "2025": 10,
+      "2024": 10,
+      "2023": 10
+    },
+    "supplement": {
+      "2025": 6,
+      "2024": 6,
+      "2023": 11
+    },
+    "competition": {
+      "2025": 10,
+      "2024": 10
+    },
+    "notes": "17.30"
+  },
+  {
+    "region": "충남",
+    "name": "서원대 체육교육",
+    "avg_score": 588,
+    "top_score": 576,
+    "safe_score": 981.6,
+    "expected_score": 976,
+    "recruitment": {
+      "2026": 28,
+      "2025": 23,
+      "2024": 23,
+      "2023": 23
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 12,
+      "2023": 12
+    },
+    "competition": {
+      "2025": 23,
+      "2024": 36
+    },
+    "notes": "6.74"
+  },
+  {
+    "region": "충남",
+    "name": "서원대 레저스포츠",
+    "avg_score": 190.5,
+    "top_score": 170,
+    "safe_score": 978.3,
+    "expected_score": 963.6,
+    "recruitment": {
+      "2026": 31,
+      "2025": 48,
+      "2024": 45,
+      "2023": 58
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 31
+    },
+    "competition": {
+      "2025": 176,
+      "2024": 157
+    },
+    "notes": "6.44"
+  },
+  {
+    "region": "충남",
+    "name": "서원대 헬스케어운동",
+    "avg_score": 193,
+    "top_score": 175,
+    "safe_score": 986.6,
+    "expected_score": 971.4,
+    "recruitment": {
+      "2026": 25,
+      "2025": 25,
+      "2024": 25,
+      "2023": 30
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 60,
+      "2024": 46
+    },
+    "notes": "8.24"
+  },
+  {
+    "region": "충남",
+    "name": "선문대 스포츠과학",
+    "avg_score": 120,
+    "top_score": 40,
+    "safe_score": 830,
+    "expected_score": 795,
+    "recruitment": {
+      "2026": 27,
+      "2025": 26,
+      "2024": 24,
+      "2023": 25
+    },
+    "supplement": {
+      "2025": 29,
+      "2024": 19,
+      "2023": 36
+    },
+    "competition": {
+      "2025": 33,
+      "2024": 16
+    },
+    "notes": "5.35"
+  },
+  {
+    "region": "충남",
+    "name": "선문대 피트니스재활",
+    "avg_score": 120,
+    "top_score": 40,
+    "safe_score": 780,
+    "expected_score": 734,
+    "recruitment": {
+      "2026": 27,
+      "2025": 25,
+      "2024": 24,
+      "2023": 25
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": 46,
+      "2024": 19
+    },
+    "notes": "4.08"
+  },
+  {
+    "region": "경기",
+    "name": "성결대 체육교육",
+    "avg_score": 395,
+    "top_score": 385,
+    "safe_score": 991,
+    "expected_score": 985,
+    "recruitment": {
+      "2026": 14,
+      "2025": 14,
+      "2024": 14,
+      "2023": 8
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 3
+    },
+    "competition": {
+      "2025": 8,
+      "2024": 6
+    },
+    "notes": "16.93"
+  },
+  {
+    "region": "충북",
+    "name": "세명대 생활체육",
+    "avg_score": 120,
+    "top_score": 40,
+    "safe_score": 860,
+    "expected_score": 740,
+    "recruitment": {
+      "2026": 30,
+      "2025": 25,
+      "2024": 25,
+      "2023": 25
+    },
+    "supplement": {
+      "2025": 27,
+      "2024": 27,
+      "2023": 36
+    },
+    "competition": {
+      "2025": 43,
+      "2024": 51
+    },
+    "notes": "3.44"
+  },
+  {
+    "region": "경기",
+    "name": "수원대 스포츠과학부",
+    "avg_score": 380,
+    "top_score": 367,
+    "safe_score": 974,
+    "expected_score": 967,
+    "recruitment": {
+      "2026": "기초 20\n축구 13\n농구 7\n체조 5",
+      "2025": "기초 20\n축구 13\n농구 7\n체조 5",
+      "2024": 20,
+      "2023": 20
+    },
+    "supplement": {
+      "2025": 13,
+      "2024": 11,
+      "2023": 13
+    },
+    "competition": {
+      "2025": "-",
+      "2024": 23
+    },
+    "notes": "27.85\n"
+  },
+  {
+    "region": "서울",
+    "name": "숙명여대 체육교육",
+    "avg_score": 380,
+    "top_score": 354,
+    "safe_score": null,
+    "expected_score": null,
+    "recruitment": {
+      "2026": 6,
+      "2025": 6,
+      "2024": 6,
+      "2023": 5
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 0,
+      "2024": null
+    },
+    "notes": "25.00"
+  },
+  {
+    "region": "충남",
+    "name": "순천향대 스포츠과학",
+    "avg_score": 276,
+    "top_score": 252,
+    "safe_score": 962,
+    "expected_score": 952,
+    "recruitment": {
+      "2026": 16,
+      "2025": 16,
+      "2024": 17,
+      "2023": 17
+    },
+    "supplement": {
+      "2025": 8,
+      "2024": 7,
+      "2023": 30
+    },
+    "competition": {
+      "2025": 13,
+      "2024": 7
+    },
+    "notes": "27.94"
+  },
+  {
+    "region": "충남",
+    "name": "순천향대 스포츠의학",
+    "avg_score": 382,
+    "top_score": 369,
+    "safe_score": 976,
+    "expected_score": 969,
+    "recruitment": {
+      "2026": 13,
+      "2025": 13,
+      "2024": 12,
+      "2023": 15
+    },
+    "supplement": {
+      "2025": 22,
+      "2024": 13,
+      "2023": 8
+    },
+    "competition": {
+      "2025": 19,
+      "2024": 27
+    },
+    "notes": "11.23"
+  },
+  {
+    "region": "충남",
+    "name": "순천향대 스포츠응용산업",
+    "avg_score": 276,
+    "top_score": 262,
+    "safe_score": 968,
+    "expected_score": 962,
+    "recruitment": {
+      "2026": 20,
+      "2025": 20,
+      "2024": 19,
+      "2023": 19
+    },
+    "supplement": {
+      "2025": 23,
+      "2024": 21,
+      "2023": 19
+    },
+    "competition": {
+      "2025": 26,
+      "2024": 6
+    },
+    "notes": "21.60"
+  },
+  {
+    "region": "인천",
+    "name": "안양대 스포츠과학",
+    "avg_score": 282,
+    "top_score": 230,
+    "safe_score": 852,
+    "expected_score": 830,
+    "recruitment": {
+      "2026": 10,
+      "2025": 7,
+      "2024": 14,
+      "2023": 12
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "22신설"
+    },
+    "competition": {
+      "2025": 42,
+      "2024": 27
+    },
+    "notes": "7.57"
+  },
+  {
+    "region": "경기",
+    "name": "안양대 스포츠응용산업",
+    "avg_score": null,
+    "top_score": null,
+    "safe_score": 800,
+    "expected_score": 730,
+    "recruitment": {
+      "2026": "일반학생선발",
+      "2025": 4,
+      "2024": 16,
+      "2023": null
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": "-",
+      "2024": 3
+    },
+    "notes": "7.00"
+  },
+  {
+    "region": "인천",
+    "name": "안양대 스포츠자율전공",
+    "avg_score": 322,
+    "top_score": 250,
+    "safe_score": 904,
+    "expected_score": 850,
+    "recruitment": {
+      "2026": 15,
+      "2025": 15,
+      "2024": null,
+      "2023": null
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": "25신설",
+      "2024": 24
+    },
+    "notes": "6.60"
+  },
+  {
+    "region": "경기",
+    "name": "용인대 스포츠레저",
+    "avg_score": 138.5,
+    "top_score": 131,
+    "safe_score": 483.5,
+    "expected_score": 476,
+    "recruitment": {
+      "2026": 8,
+      "2025": 9,
+      "2024": 16,
+      "2023": 15
+    },
+    "supplement": {
+      "2025": 2,
+      "2024": 4,
+      "2023": 2
+    },
+    "competition": {
+      "2025": 16,
+      "2024": 1
+    },
+    "notes": "33.56"
+  },
+  {
+    "region": "경기",
+    "name": "용인대 특수체육교육",
+    "avg_score": 142.5,
+    "top_score": 140.7,
+    "safe_score": 492.5,
+    "expected_score": 490.7,
+    "recruitment": {
+      "2026": 12,
+      "2025": 12,
+      "2024": 12,
+      "2023": 13
+    },
+    "supplement": {
+      "2025": 2,
+      "2024": 5,
+      "2023": 0
+    },
+    "competition": {
+      "2025": 14,
+      "2024": 15
+    },
+    "notes": "19.17"
+  },
+  {
+    "region": "경기",
+    "name": "용인대 체육",
+    "avg_score": 139.5,
+    "top_score": 137,
+    "safe_score": 484.5,
+    "expected_score": 482,
+    "recruitment": {
+      "2026": 13,
+      "2025": 12,
+      "2024": null,
+      "2023": null
+    },
+    "supplement": {
+      "2025": null,
+      "2024": null,
+      "2023": null
+    },
+    "competition": {
+      "2025": "25신설",
+      "2024": 16
+    },
+    "notes": "40.25"
+  },
+  {
+    "region": "전북",
+    "name": "원광대 스포츠과학",
+    "avg_score": 540,
+    "top_score": 530,
+    "safe_score": 1455,
+    "expected_score": 1354,
+    "recruitment": {
+      "2026": 45,
+      "2025": 45,
+      "2024": 53,
+      "2023": 53
+    },
+    "supplement": {
+      "2025": 20,
+      "2024": 18,
+      "2023": 29
+    },
+    "competition": {
+      "2025": 115,
+      "2024": 67
+    },
+    "notes": "4.11"
+  },
+  {
+    "region": "전북",
+    "name": "원광대 체육교육",
+    "avg_score": 582.5,
+    "top_score": 530,
+    "safe_score": 1450,
+    "expected_score": 1250,
+    "recruitment": {
+      "2026": 18,
+      "2025": 18,
+      "2024": 18,
+      "2023": 18
+    },
+    "supplement": {
+      "2025": 2,
+      "2024": 2,
+      "2023": 3
+    },
+    "competition": {
+      "2025": 10,
+      "2024": 9
+    },
+    "notes": "16.44"
+  },
+  {
+    "region": "경기",
+    "name": "을지대 스포츠아웃도어",
+    "avg_score": 255.7,
+    "top_score": 185.1,
+    "safe_score": 916,
+    "expected_score": 892,
+    "recruitment": {
+      "2026": "-",
+      "2025": null,
+      "2024": 25,
+      "2023": 27
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 15,
+      "2023": 25
+    },
+    "competition": {
+      "2025": null,
+      "2024": null
+    },
+    "notes": null
+  },
+  {
+    "region": "인천",
+    "name": "인천대 운동건강",
+    "avg_score": 194.6,
+    "top_score": 190.1,
+    "safe_score": 487.6,
+    "expected_score": 483.1,
+    "recruitment": {
+      "2026": 20,
+      "2025": 20,
+      "2024": 20,
+      "2023": 24
+    },
+    "supplement": {
+      "2025": 3,
+      "2024": 5,
+      "2023": 1
+    },
+    "competition": {
+      "2025": 4,
+      "2024": 1
+    },
+    "notes": "16.05"
+  },
+  {
+    "region": "인천",
+    "name": "인천대 스포츠과학",
+    "avg_score": 195.4,
+    "top_score": 192.1,
+    "safe_score": 488.4,
+    "expected_score": 485.1,
+    "recruitment": {
+      "2026": 27,
+      "2025": 27,
+      "2024": 27,
+      "2023": 27
+    },
+    "supplement": {
+      "2025": 9,
+      "2024": 12,
+      "2023": 10
+    },
+    "competition": {
+      "2025": 3,
+      "2024": 4
+    },
+    "notes": "7.74"
+  },
+  {
+    "region": "인천",
+    "name": "인천대 체육교육",
+    "avg_score": 198.4,
+    "top_score": 197.1,
+    "safe_score": 395.4,
+    "expected_score": 392.4,
+    "recruitment": {
+      "2026": 8,
+      "2025": 7,
+      "2024": 7,
+      "2023": 6
+    },
+    "supplement": {
+      "2025": 0,
+      "2024": 2,
+      "2023": 2
+    },
+    "competition": {
+      "2025": 0,
+      "2024": 3
+    },
+    "notes": "15.29"
+  },
+  {
+    "region": "충남",
+    "name": "중부대 스포츠재활복지",
+    "avg_score": 235,
+    "top_score": 160,
+    "safe_score": 882,
+    "expected_score": 836,
+    "recruitment": {
+      "2026": 10,
+      "2025": 10,
+      "2024": 26,
+      "2023": 22
+    },
+    "supplement": {
+      "2025": 42,
+      "2024": 57,
+      "2023": 62
+    },
+    "competition": {
+      "2025": 22,
+      "2024": 25
+    },
+    "notes": "5.90"
+  },
+  {
+    "region": "충남",
+    "name": "중부대 스포츠건강관리",
+    "avg_score": 220,
+    "top_score": 160,
+    "safe_score": 848,
+    "expected_score": 808,
+    "recruitment": {
+      "2026": 12,
+      "2025": 10,
+      "2024": 21,
+      "2023": 25
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": 74
+    },
+    "competition": {
+      "2025": 67,
+      "2024": 35
+    },
+    "notes": "5.20"
+  },
+  {
+    "region": "경기",
+    "name": "중부대 특수체육교육",
+    "avg_score": 280,
+    "top_score": 225,
+    "safe_score": 955,
+    "expected_score": 925,
+    "recruitment": {
+      "2026": 18,
+      "2025": 18,
+      "2024": 18,
+      "2023": 18
+    },
+    "supplement": {
+      "2025": 8,
+      "2024": 18,
+      "2023": 27
+    },
+    "competition": {
+      "2025": 35,
+      "2024": 31
+    },
+    "notes": "7.44"
+  },
+  {
+    "region": "충북",
+    "name": "중원대 스포츠경영학부",
+    "avg_score": 134,
+    "top_score": 104,
+    "safe_score": null,
+    "expected_score": null,
+    "recruitment": {
+      "2026": "-",
+      "2025": 19,
+      "2024": 15,
+      "2023": 15
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 46,
+      "2023": "_"
+    },
+    "competition": {
+      "2025": "-",
+      "2024": null
+    },
+    "notes": "1.79"
+  },
+  {
+    "region": "충북",
+    "name": "한국교통대 스포츠의학",
+    "avg_score": 561,
+    "top_score": 500,
+    "safe_score": 931,
+    "expected_score": 900,
+    "recruitment": {
+      "2026": 13,
+      "2025": 13,
+      "2024": 13,
+      "2023": 27
+    },
+    "supplement": {
+      "2025": 10,
+      "2024": 8,
+      "2023": 14
+    },
+    "competition": {
+      "2025": 10,
+      "2024": 10
+    },
+    "notes": "5.54"
+  },
+  {
+    "region": "충북",
+    "name": "한국교통대 스포츠산업",
+    "avg_score": 232,
+    "top_score": 195,
+    "safe_score": 897,
+    "expected_score": 875,
+    "recruitment": {
+      "2026": 10,
+      "2025": 10,
+      "2024": 11,
+      "2023": "_"
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 10,
+      "2024": 10
+    },
+    "notes": "9.60"
+  },
+  {
+    "region": "서울",
+    "name": "한국체대 노인체육복지",
+    "avg_score": 991.03,
+    "top_score": 989.5,
+    "safe_score": 173.68,
+    "expected_score": 157.89,
+    "recruitment": {
+      "2026": 7,
+      "2025": 7,
+      "2024": 7,
+      "2023": 7
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 0,
+      "2024": 0
+    },
+    "notes": "9.57"
+  },
+  {
+    "region": "서울",
+    "name": "한국체대 스포츠산업",
+    "avg_score": 991.2,
+    "top_score": 989.4,
+    "safe_score": 175.96,
+    "expected_score": 157.02,
+    "recruitment": {
+      "2026": 5,
+      "2025": 10,
+      "2024": 10,
+      "2023": 10
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 1,
+      "2024": 3
+    },
+    "notes": "19.60"
+  },
+  {
+    "region": "서울",
+    "name": "한국체대 사회체육",
+    "avg_score": 990.32,
+    "top_score": 988.85,
+    "safe_score": 355.95,
+    "expected_score": 311.18,
+    "recruitment": {
+      "2026": 10,
+      "2025": 5,
+      "2024": 5,
+      "2023": 5
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 2,
+      "2024": 0
+    },
+    "notes": "13.20"
+  },
+  {
+    "region": "서울",
+    "name": "한국체대 스포츠청소년지도",
+    "avg_score": 991.45,
+    "top_score": 990.15,
+    "safe_score": 169.86,
+    "expected_score": 145.62,
+    "recruitment": {
+      "2026": 11,
+      "2025": 11,
+      "2024": 11,
+      "2023": 11
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 0,
+      "2024": 5
+    },
+    "notes": "10.45"
+  },
+  {
+    "region": "서울",
+    "name": "한국체대 운동건강",
+    "avg_score": 995.31,
+    "top_score": 992.85,
+    "safe_score": 261.95,
+    "expected_score": 242.11,
+    "recruitment": {
+      "2026": 5,
+      "2025": 10,
+      "2024": 10,
+      "2023": 10
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 0,
+      "2024": 1
+    },
+    "notes": "7.70"
+  },
+  {
+    "region": "서울",
+    "name": "한국체대 특수체육교육",
+    "avg_score": 994.61,
+    "top_score": 992.4,
+    "safe_score": 253.05,
+    "expected_score": 226.32,
+    "recruitment": {
+      "2026": 19,
+      "2025": 19,
+      "2024": 19,
+      "2023": 19
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 4,
+      "2024": 6
+    },
+    "notes": "5.21"
+  },
+  {
+    "region": "대전",
+    "name": "한남대 스포츠과학",
+    "avg_score": 352,
+    "top_score": 312,
+    "safe_score": 940,
+    "expected_score": 912,
+    "recruitment": {
+      "2026": 30,
+      "2025": 30,
+      "2024": 30,
+      "2023": 30
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": 23,
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 55,
+      "2024": 31
+    },
+    "notes": "7.53"
+  },
+  {
+    "region": "충남",
+    "name": "한서대 경호비서",
+    "avg_score": 165,
+    "top_score": 100,
+    "safe_score": 580,
+    "expected_score": 490,
+    "recruitment": {
+      "2026": 25,
+      "2025": 25,
+      "2024": 20,
+      "2023": 20
+    },
+    "supplement": {
+      "2025": 6,
+      "2024": 6,
+      "2023": 19
+    },
+    "competition": {
+      "2025": 26,
+      "2024": 15
+    },
+    "notes": "2.04"
+  },
+  {
+    "region": "충남",
+    "name": "한서대 레저해양스포츠",
+    "avg_score": 170,
+    "top_score": 100,
+    "safe_score": 880,
+    "expected_score": 745,
+    "recruitment": {
+      "2026": 45,
+      "2025": 45,
+      "2024": 40,
+      "2023": 45
+    },
+    "supplement": {
+      "2025": 46,
+      "2024": 24,
+      "2023": 41
+    },
+    "competition": {
+      "2025": 76,
+      "2024": 72
+    },
+    "notes": "2.78"
+  },
+  {
+    "region": "경기",
+    "name": "한신대 특수체육",
+    "avg_score": 583,
+    "top_score": 573,
+    "safe_score": 980,
+    "expected_score": 973,
+    "recruitment": {
+      "2026": 22,
+      "2025": 22,
+      "2024": 22,
+      "2023": 22
+    },
+    "supplement": {
+      "2025": 26,
+      "2024": 15,
+      "2023": 14
+    },
+    "competition": {
+      "2025": 17,
+      "2024": 27
+    },
+    "notes": "19.95"
+  },
+  {
+    "region": "경기",
+    "name": "한양대(에) 스포츠과학",
+    "avg_score": null,
+    "top_score": null,
+    "safe_score": null,
+    "expected_score": null,
+    "recruitment": {
+      "2026": "미선발",
+      "2025": 32,
+      "2024": 15,
+      "2023": 15
+    },
+    "supplement": {
+      "2025": "_",
+      "2024": "_",
+      "2023": "_"
+    },
+    "competition": {
+      "2025": 2,
+      "2024": null
+    },
+    "notes": "146.07"
+  },
+  {
+    "region": "충남",
+    "name": "호서대 사회체육",
+    "avg_score": 156,
+    "top_score": 124,
+    "safe_score": 940,
+    "expected_score": 924,
+    "recruitment": {
+      "2026": 19,
+      "2025": 19,
+      "2024": 19,
+      "2023": 19
+    },
+    "supplement": {
+      "2025": 14,
+      "2024": 8,
+      "2023": 18
+    },
+    "competition": {
+      "2025": 64,
+      "2024": 37
+    },
+    "notes": "24.53"
+  }
+]
