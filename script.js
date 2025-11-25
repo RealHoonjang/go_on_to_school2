@@ -3,6 +3,70 @@ let allData = {};
 let currentEvent = null;
 let currentEventStats = null;
 let distributionChart = null;
+let chartMarkers = {
+    personal: null,
+    top10: null
+};
+let chartMarkerPluginRegistered = false;
+
+const chartMarkerPlugin = {
+    id: 'chartMarkerPlugin',
+    afterDatasetsDraw(chart) {
+        if ((!chartMarkers.personal && !chartMarkers.top10) || !chart.chartArea) {
+            return;
+        }
+        
+        const { ctx, chartArea } = chart;
+        const barCount = chart.data.labels?.length || 0;
+        if (!barCount) return;
+        
+        const chartWidth = chartArea.right - chartArea.left;
+        
+        const drawMarkerLine = (marker) => {
+            if (!marker || marker.relativeX === null || marker.relativeX === undefined) {
+                return;
+            }
+            const xPosition = chartArea.left + chartWidth * marker.relativeX;
+            
+            ctx.save();
+            ctx.strokeStyle = marker.color || '#ff6384';
+            ctx.lineWidth = marker.lineWidth || 3;
+            ctx.setLineDash(marker.dash || [10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(xPosition, chartArea.top);
+            ctx.lineTo(xPosition, chartArea.bottom);
+            ctx.stroke();
+            ctx.restore();
+        };
+        
+        drawMarkerLine(chartMarkers.personal);
+        drawMarkerLine(chartMarkers.top10);
+        
+        ctx.save();
+        ctx.textAlign = 'left';
+        ctx.font = 'bold 14px "Segoe UI", "Malgun Gothic", sans-serif';
+        let textY = chartArea.top + 24;
+        
+        if (chartMarkers.personal?.label) {
+            ctx.fillStyle = chartMarkers.personal.labelColor || '#ff6384';
+            ctx.fillText(chartMarkers.personal.label, chartArea.left + 10, textY);
+            textY += 18;
+        }
+        
+        if (chartMarkers.top10?.label) {
+            ctx.fillStyle = chartMarkers.top10.labelColor || '#2563eb';
+            ctx.fillText(chartMarkers.top10.label, chartArea.left + 10, textY);
+        }
+        ctx.restore();
+    }
+};
+
+function ensureChartMarkerPlugin() {
+    if (!chartMarkerPluginRegistered && typeof Chart !== 'undefined') {
+        Chart.register(chartMarkerPlugin);
+        chartMarkerPluginRegistered = true;
+    }
+}
 
 const eventMapping = {
     'seoul': {
@@ -83,11 +147,202 @@ const unitMap = {
     'front_bend': 'cm'
 };
 
+// CSV 데이터를 로드하여 저장할 변수
+let careerGuideData = [];
+let certificateData = [];
+let loadmapData = [];
+let careerMajors = [];
+let careerJobDetails = {};
+let certificationDetails = {};
+let loadmapByCareer = {};
+
+// CSV 파일 파싱 함수
+function parseCSV(csvText) {
+    const lines = csvText.split('\n').filter(line => line.trim());
+    if (lines.length < 2) return [];
+    
+    const headers = lines[0].split(',').map(h => h.trim());
+    const data = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+        const values = [];
+        let currentValue = '';
+        let inQuotes = false;
+        
+        for (let j = 0; j < lines[i].length; j++) {
+            const char = lines[i][j];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                values.push(currentValue.trim());
+                currentValue = '';
+            } else {
+                currentValue += char;
+            }
+        }
+        values.push(currentValue.trim());
+        
+        if (values.length === headers.length) {
+            const row = {};
+            headers.forEach((header, index) => {
+                row[header] = values[index] || '';
+            });
+            data.push(row);
+        }
+    }
+    
+    return data;
+}
+
+// 진로 가이드 CSV 로드
+async function loadCareerGuideData() {
+    try {
+        const response = await fetch('jinro/Guide.csv');
+        if (!response.ok) throw new Error('Guide.csv 로드 실패');
+        const csvText = await response.text();
+        careerGuideData = parseCSV(csvText);
+        
+        // 학과별로 그룹화
+        const majorMap = new Map();
+        careerGuideData.forEach(row => {
+            const major = row['학과'] || '';
+            if (!major) return;
+            
+            if (!majorMap.has(major)) {
+                majorMap.set(major, {
+                    name: major,
+                    careers: []
+                });
+            }
+            
+            majorMap.get(major).careers.push({
+                career: row['진로'] || '',
+                qualification: row['필요자격증'] || '',
+                workplaces: row['주요 취업처'] || '',
+                salary: row['초봉/연봉'] || '',
+                strategy: row['준비전략'] || ''
+            });
+        });
+        
+        // careerMajors 배열 생성
+        careerMajors = Array.from(majorMap.entries()).map(([majorName, data], index) => {
+            const uniqueCareers = [...new Set(data.careers.map(c => c.career))];
+            return {
+                id: `major_${index}`,
+                name: majorName,
+                careers: data.careers,
+                jobs: uniqueCareers
+            };
+        });
+        
+        // careerJobDetails 객체 생성
+        careerGuideData.forEach(row => {
+            const career = row['진로'] || '';
+            if (!career) return;
+            
+            if (!careerJobDetails[career]) {
+                careerJobDetails[career] = {
+                    description: career,
+                    qualification: row['필요자격증'] || '',
+                    salary: row['초봉/연봉'] || '',
+                    workplaces: row['주요 취업처'] || '',
+                    strategy: row['준비전략'] || '',
+                    certifications: []
+                };
+            }
+            
+            // 필요자격증 파싱
+            const quals = (row['필요자격증'] || '').split(/[+또는및]/).map(q => q.trim()).filter(q => q);
+            careerJobDetails[career].certifications = [...new Set([...careerJobDetails[career].certifications, ...quals])];
+        });
+        
+        console.log('진로 가이드 데이터 로드 완료:', careerMajors.length, '개 학과');
+    } catch (error) {
+        console.error('진로 가이드 데이터 로드 오류:', error);
+    }
+}
+
+// 자격증 CSV 로드
+async function loadCertificateData() {
+    try {
+        const response = await fetch('jinro/Certificate.csv');
+        if (!response.ok) throw new Error('Certificate.csv 로드 실패');
+        const csvText = await response.text();
+        certificateData = parseCSV(csvText);
+        
+        // certificationDetails 객체 생성 (새로운 필드 포함)
+        certificateData.forEach(row => {
+            const certName = row['자격증명'] || '';
+            if (!certName) return;
+            
+            certificationDetails[certName] = {
+                category: row['자격증 분류'] || '',
+                agency: row['발급/관리기관'] || row['발급기관'] || '',
+                requirement: row['응시자격'] || '',
+                subjects: row['시험과목'] || '',
+                preparationPeriod: row['준비기간'] || '',
+                salary: row['연봉/처우'] || row['예상비용'] || '',
+                difficulty: row['난이도'] || '',
+                validity: row['유효기간'] || '',
+                workplaces: row['주요 취업처'] || row['취업처/활용도'] || ''
+            };
+        });
+        
+        console.log('자격증 데이터 로드 완료:', Object.keys(certificationDetails).length, '개 자격증');
+    } catch (error) {
+        console.error('자격증 데이터 로드 오류:', error);
+    }
+}
+
+// 로드맵 CSV 로드
+async function loadLoadmapData() {
+    try {
+        const response = await fetch('jinro/loadmap.csv');
+        if (!response.ok) throw new Error('loadmap.csv 로드 실패');
+        const csvText = await response.text();
+        loadmapData = parseCSV(csvText);
+        
+        // 진로별로 로드맵 그룹화
+        loadmapData.forEach(row => {
+            const career = row['진로목표'] || '';
+            if (!career) return;
+            
+            if (!loadmapByCareer[career]) {
+                loadmapByCareer[career] = [];
+            }
+            
+            loadmapByCareer[career].push({
+                stage: row['단계'] || '',
+                content: row['구체적준비내용'] || '',
+                period: row['예상기간'] || '',
+                requiredCert: row['필수자격증'] || ''
+            });
+        });
+        
+        // 단계별로 정렬
+        Object.keys(loadmapByCareer).forEach(career => {
+            loadmapByCareer[career].sort((a, b) => {
+                const stageA = a.stage.match(/\d+/)?.[0] || 0;
+                const stageB = b.stage.match(/\d+/)?.[0] || 0;
+                return parseInt(stageA) - parseInt(stageB);
+            });
+        });
+        
+        console.log('로드맵 데이터 로드 완료:', Object.keys(loadmapByCareer).length, '개 진로');
+    } catch (error) {
+        console.error('로드맵 데이터 로드 오류:', error);
+    }
+}
+
 // DOM 로드 완료 시 실행
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     initializeApp();
     setupEventListeners();
     loadAllDataFiles();
+    
+    // CSV 데이터 로드 후 진로 가이드 초기화
+    await Promise.all([loadCareerGuideData(), loadCertificateData(), loadLoadmapData()]);
+    initializeCareerGuidance();
 });
 
 // 앱 초기화
@@ -356,6 +611,497 @@ function removeOutliers(scores, eventName) {
     }
     
     return scores.filter(score => score >= bounds.min && score <= bounds.max);
+}
+
+function initializeCareerGuidance() {
+    const majorSelect = document.getElementById('career-major-select');
+    const jobSelect = document.getElementById('career-job-select');
+    const panel = document.getElementById('career-info-panel');
+    const certSelect = document.getElementById('certificate-select');
+    const certJobsPanel = document.getElementById('certificate-jobs-panel');
+
+    if (!majorSelect || !jobSelect || !panel) {
+        return;
+    }
+
+    const majorOptions = careerMajors.map(major => `<option value="${major.id}">${major.name}</option>`).join('');
+    majorSelect.insertAdjacentHTML('beforeend', majorOptions);
+
+    // 자격증 드롭박스 초기화
+    if (certSelect && certJobsPanel) {
+        const certOptions = Object.keys(certificationDetails).map(certName => 
+            `<option value="${certName}">${certName}</option>`
+        ).join('');
+        certSelect.insertAdjacentHTML('beforeend', certOptions);
+
+        certSelect.addEventListener('change', () => {
+            const selectedCert = certSelect.value;
+            if (!selectedCert) {
+                certJobsPanel.innerHTML = `
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-info-circle fa-2x mb-2"></i>
+                        <p class="mb-0">자격증을 선택하면 해당 자격증으로 취업할 수 있는 직업 정보를 보여드립니다.</p>
+                    </div>`;
+                return;
+            }
+
+            renderJobsByCertificate(selectedCert);
+        });
+    }
+
+    majorSelect.addEventListener('change', () => {
+        const selectedMajor = careerMajors.find(major => major.id === majorSelect.value);
+        if (!selectedMajor) {
+            jobSelect.innerHTML = '<option value="">먼저 학과를 선택해주세요</option>';
+            jobSelect.disabled = true;
+            panel.innerHTML = `
+                <div class="text-center text-muted py-4">
+                    <i class="fas fa-info-circle fa-2x mb-2"></i>
+                    <p class="mb-0">학과와 직업을 선택하면 주요 정보를 보여드립니다.</p>
+                </div>`;
+            return;
+        }
+
+        // 학과 선택 시 해당 학과의 모든 진로 표시
+        const jobOptions = selectedMajor.jobs.map(job => `<option value="${job}">${job}</option>`).join('');
+        jobSelect.innerHTML = `<option value="">직업을 선택하세요</option>${jobOptions}`;
+        jobSelect.disabled = false;
+        
+        // 학과 선택 시 해당 학과의 진로 목록 미리보기 표시
+        if (selectedMajor.careers && selectedMajor.careers.length > 0) {
+            const careerPreview = selectedMajor.careers.map(career => {
+                return `
+                    <div class="card mb-2">
+                        <div class="card-body p-3">
+                            <h6 class="card-title mb-2">${career.career}</h6>
+                            <div class="small text-muted">
+                                <div><i class="fas fa-certificate me-1"></i>필요자격: ${career.qualification || '-'}</div>
+                                <div><i class="fas fa-won-sign me-1"></i>연봉: ${career.salary || '-'}</div>
+                                <div><i class="fas fa-building me-1"></i>취업처: ${career.workplaces || '-'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            panel.innerHTML = `
+                <div class="mb-3">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>${selectedMajor.name} 진로 정보</h5>
+                    <p class="text-muted">아래 진로 중 하나를 선택하면 상세 정보를 확인할 수 있습니다.</p>
+                </div>
+                <div class="career-preview">
+                    ${careerPreview}
+                </div>
+            `;
+        }
+    });
+
+    jobSelect.addEventListener('change', () => {
+        renderCareerInformation(jobSelect.value, majorSelect.value);
+    });
+}
+
+function renderCareerInformation(jobName, majorId) {
+    const panel = document.getElementById('career-info-panel');
+    if (!panel) return;
+
+    if (!jobName) {
+        panel.innerHTML = `
+            <div class="text-center text-muted py-4">
+                <i class="fas fa-info-circle fa-2x mb-2"></i>
+                <p class="mb-0">관심 직업을 선택하면 상세 정보를 확인할 수 있습니다.</p>
+            </div>`;
+        return;
+    }
+
+    const jobInfo = careerJobDetails[jobName];
+    const majorInfo = careerMajors.find(major => major.id === majorId);
+
+    if (!jobInfo) {
+        panel.innerHTML = `
+            <div class="alert alert-warning mb-0">
+                <p class="mb-0">선택한 직업에 대한 정보를 찾을 수 없습니다.</p>
+            </div>`;
+        return;
+    }
+
+    // 필요자격증 목록 생성 (중복 제거)
+    const requiredCerts = jobInfo.certifications || [];
+    const uniqueCerts = [...new Set(requiredCerts)];
+
+    // 자격증 정보 매칭 (부분 일치 포함)
+    const matchedCertifications = [];
+    uniqueCerts.forEach(certName => {
+        // 정확한 이름으로 찾기
+        let cert = certificationDetails[certName];
+        
+        // 부분 일치로 찾기
+        if (!cert) {
+            for (const [key, value] of Object.entries(certificationDetails)) {
+                if (key.includes(certName) || certName.includes(key)) {
+                    cert = value;
+                    certName = key; // 실제 자격증명으로 업데이트
+                    break;
+                }
+            }
+        }
+        
+        if (cert) {
+            matchedCertifications.push({ name: certName, info: cert });
+        } else {
+            // 자격증 정보가 없어도 표시
+            matchedCertifications.push({ name: certName, info: null });
+        }
+    });
+
+    const certificationList = matchedCertifications.map(({ name, info }) => {
+        if (!info) {
+            return `<li class="list-group-item">
+                        <div class="fw-bold">${name}</div>
+                        <small class="text-muted">상세 정보는 추후 업데이트 예정입니다.</small>
+                    </li>`;
+        }
+        return `
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div class="flex-grow-1">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="fw-bold me-2">${name}</div>
+                            ${info.category ? `<span class="badge bg-secondary-subtle text-secondary">${info.category}</span>` : ''}
+                        </div>
+                        <div class="row g-2 small text-muted">
+                            <div class="col-md-6">
+                                <i class="fas fa-building me-1"></i><strong>발급기관:</strong> ${info.agency || '-'}
+                            </div>
+                            <div class="col-md-6">
+                                <i class="fas fa-user-graduate me-1"></i><strong>응시자격:</strong> ${info.requirement || '-'}
+                            </div>
+                            ${info.subjects ? `<div class="col-md-6">
+                                <i class="fas fa-book me-1"></i><strong>시험과목:</strong> ${info.subjects}
+                            </div>` : ''}
+                            ${info.preparationPeriod ? `<div class="col-md-6">
+                                <i class="fas fa-calendar me-1"></i><strong>준비기간:</strong> ${info.preparationPeriod}
+                            </div>` : ''}
+                            <div class="col-md-6">
+                                <i class="fas fa-won-sign me-1"></i><strong>연봉/처우:</strong> ${info.salary || '-'}
+                            </div>
+                            <div class="col-md-6">
+                                <i class="fas fa-clock me-1"></i><strong>유효기간:</strong> ${info.validity || '-'}
+                            </div>
+                            <div class="col-12">
+                                <i class="fas fa-briefcase me-1"></i><strong>주요 취업처:</strong> ${info.workplaces || '-'}
+                            </div>
+                        </div>
+                    </div>
+                    <span class="badge ${info.difficulty === '높음' || info.difficulty === '상' ? 'bg-danger' : info.difficulty === '중간' || info.difficulty === '중' ? 'bg-warning' : 'bg-success'} ms-2">${info.difficulty || '-'}</span>
+                </div>
+            </li>`;
+    }).join('');
+
+    const certificationHtml = matchedCertifications.length > 0
+        ? `<ul class="list-group list-group-flush">${certificationList}</ul>`
+        : `<div class="text-muted">추천 자격증 정보가 필요하지 않은 직무입니다.</div>`;
+
+    // 로드맵 정보 가져오기
+    const loadmap = loadmapByCareer[jobName] || [];
+    const loadmapHtml = loadmap.length > 0 ? `
+        <div class="mt-4">
+            <h5 class="mb-3"><i class="fas fa-route me-2"></i>진로 로드맵</h5>
+            <div class="timeline">
+                ${loadmap.map((step, index) => `
+                    <div class="timeline-item mb-4">
+                        <div class="d-flex">
+                            <div class="timeline-marker me-3">
+                                <div class="timeline-number">${index + 1}</div>
+                            </div>
+                            <div class="flex-grow-1">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title mb-2">
+                                            <i class="fas fa-step-forward me-2 text-primary"></i>${step.stage}
+                                        </h6>
+                                        <p class="card-text mb-2">${step.content}</p>
+                                        <div class="small text-muted mb-2">
+                                            <i class="fas fa-calendar-alt me-1"></i><strong>예상기간:</strong> ${step.period}
+                                        </div>
+                                        ${step.requiredCert ? `<div class="small text-info">
+                                            <i class="fas fa-certificate me-1"></i><strong>필수자격증:</strong> ${step.requiredCert}
+                                        </div>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    ` : '';
+
+    panel.innerHTML = `
+        <div class="career-summary">
+            ${majorInfo ? `<span class="badge bg-primary-subtle text-primary mb-2">추천 학과: ${majorInfo.name}</span>` : ''}
+            <h4 class="fw-bold">${jobName}</h4>
+            <p class="text-muted mb-4">${jobInfo.description || jobName}</p>
+            ${jobInfo.strategy ? `<div class="alert alert-info mb-3">
+                <strong><i class="fas fa-lightbulb me-2"></i>준비전략:</strong> ${jobInfo.strategy}
+            </div>` : ''}
+            <div class="row g-3 career-meta">
+                <div class="col-md-4">
+                    <div class="meta-box">
+                        <div class="meta-label">필요 자격</div>
+                        <div class="meta-value">${jobInfo.qualification || '-'}</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="meta-box">
+                        <div class="meta-label">예상 연봉(초봉)</div>
+                        <div class="meta-value">${jobInfo.salary || '-'}</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="meta-box">
+                        <div class="meta-label">취업처</div>
+                        <div class="meta-value">${jobInfo.workplaces || '-'}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <h5 class="mb-3"><i class="fas fa-id-card me-2"></i>추천 자격증</h5>
+            ${certificationHtml}
+        </div>
+        ${loadmapHtml}
+    `;
+}
+
+// 자격증별 관련 직업 표시 함수
+function renderJobsByCertificate(certName) {
+    const panel = document.getElementById('certificate-jobs-panel');
+    if (!panel) return;
+
+    // 자격증 정보 가져오기
+    const certInfo = certificationDetails[certName];
+    if (!certInfo) {
+        panel.innerHTML = `
+            <div class="alert alert-warning mb-0">
+                <p class="mb-0">선택한 자격증에 대한 정보를 찾을 수 없습니다.</p>
+            </div>`;
+        return;
+    }
+
+    // 해당 자격증을 필요로 하는 직업 찾기
+    const relatedJobs = [];
+    
+    // Guide.csv 데이터에서 해당 자격증을 필요로 하는 진로 찾기
+    careerGuideData.forEach(row => {
+        const requiredQuals = (row['필요자격증'] || '').toLowerCase();
+        const certNameLower = certName.toLowerCase();
+        
+        // 부분 일치 검색 (자격증명이 필요자격증에 포함되어 있는지)
+        if (requiredQuals.includes(certNameLower) || 
+            certNameLower.includes(requiredQuals) ||
+            requiredQuals.split(/[+또는및,]/).some(q => {
+                const trimmed = q.trim();
+                return trimmed.includes(certNameLower) || certNameLower.includes(trimmed);
+            })) {
+            const career = row['진로'] || '';
+            if (career && !relatedJobs.find(j => j.career === career)) {
+                relatedJobs.push({
+                    career: career,
+                    major: row['학과'] || '',
+                    qualification: row['필요자격증'] || '',
+                    workplaces: row['주요 취업처'] || '',
+                    salary: row['초봉/연봉'] || '',
+                    strategy: row['준비전략'] || ''
+                });
+            }
+        }
+    });
+
+    // 자격증 정보 표시 (새로운 필드 포함)
+    const certInfoHtml = `
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-id-card me-2"></i>${certName}</h5>
+                ${certInfo.category ? `<span class="badge bg-light text-dark">${certInfo.category}</span>` : ''}
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="small">
+                            <strong><i class="fas fa-building me-1"></i>발급/관리기관:</strong> ${certInfo.agency || '-'}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="small">
+                            <strong><i class="fas fa-user-graduate me-1"></i>응시자격:</strong> ${certInfo.requirement || '-'}
+                        </div>
+                    </div>
+                    ${certInfo.subjects ? `<div class="col-md-6">
+                        <div class="small">
+                            <strong><i class="fas fa-book me-1"></i>시험과목:</strong> ${certInfo.subjects}
+                        </div>
+                    </div>` : ''}
+                    ${certInfo.preparationPeriod ? `<div class="col-md-6">
+                        <div class="small">
+                            <strong><i class="fas fa-calendar me-1"></i>준비기간:</strong> ${certInfo.preparationPeriod}
+                        </div>
+                    </div>` : ''}
+                    <div class="col-md-6">
+                        <div class="small">
+                            <strong><i class="fas fa-won-sign me-1"></i>연봉/처우:</strong> ${certInfo.salary || '-'}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="small">
+                            <strong><i class="fas fa-clock me-1"></i>유효기간:</strong> ${certInfo.validity || '-'}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="small">
+                            <strong><i class="fas fa-briefcase me-1"></i>주요 취업처:</strong> ${certInfo.workplaces || '-'}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <span class="badge ${certInfo.difficulty === '높음' || certInfo.difficulty === '상' ? 'bg-danger' : certInfo.difficulty === '중간' || certInfo.difficulty === '중' ? 'bg-warning' : 'bg-success'}">
+                            난이도: ${certInfo.difficulty || '-'}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 관련 직업 목록 표시
+    if (relatedJobs.length === 0) {
+        panel.innerHTML = certInfoHtml + `
+            <div class="alert alert-info mb-0">
+                <p class="mb-0"><i class="fas fa-info-circle me-2"></i>해당 자격증을 필요로 하는 직업 정보를 찾을 수 없습니다.</p>
+            </div>`;
+        return;
+    }
+
+    const jobsList = relatedJobs.map((job, index) => {
+        return `
+            <div class="card mb-3 job-card" data-job-name="${job.career}" style="cursor: pointer; transition: all 0.2s;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h5 class="card-title mb-2">
+                                <i class="fas fa-briefcase me-2 text-primary"></i>${job.career}
+                            </h5>
+                            ${job.major ? `<div class="small text-muted mb-2">
+                                <i class="fas fa-graduation-cap me-1"></i>관련 학과: ${job.major}
+                            </div>` : ''}
+                            <div class="small text-muted mb-1">
+                                <i class="fas fa-won-sign me-1"></i>연봉: ${job.salary || '-'}
+                            </div>
+                            <div class="small text-muted">
+                                <i class="fas fa-building me-1"></i>취업처: ${job.workplaces || '-'}
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right text-muted"></i>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    panel.innerHTML = certInfoHtml + `
+        <div class="mb-3">
+            <h5><i class="fas fa-briefcase me-2"></i>이 자격증으로 취업할 수 있는 직업 (${relatedJobs.length}개)</h5>
+            <p class="text-muted small">아래 직업을 클릭하면 상세 정보를 확인할 수 있습니다.</p>
+        </div>
+        ${jobsList}
+    `;
+
+    // 직업 카드 클릭 이벤트 리스너 추가
+    panel.querySelectorAll('.job-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const jobName = this.getAttribute('data-job-name');
+            if (jobName) {
+                showJobDetail(jobName);
+            }
+        });
+        
+        // 호버 효과
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'none';
+        });
+    });
+}
+
+// 직업 상세 정보 표시 함수 (자격증 탭에서 호출) - 전역 함수
+window.showJobDetail = function(jobName) {
+    // 학과별 진로 찾기 탭으로 전환
+    const certTab = document.getElementById('cert-tab');
+    const majorTab = document.getElementById('major-tab');
+    if (certTab && majorTab) {
+        certTab.classList.remove('active');
+        majorTab.classList.add('active');
+        
+        const certPanel = document.getElementById('cert-panel');
+        const majorPanel = document.getElementById('major-panel');
+        if (certPanel && majorPanel) {
+            certPanel.classList.remove('show', 'active');
+            majorPanel.classList.add('show', 'active');
+        }
+    }
+
+    // 해당 직업이 속한 학과 찾기
+    const jobMajor = careerMajors.find(major => major.jobs.includes(jobName));
+    if (jobMajor) {
+        const majorSelect = document.getElementById('career-major-select');
+        const jobSelect = document.getElementById('career-job-select');
+        
+        if (majorSelect) {
+            majorSelect.value = jobMajor.id;
+            majorSelect.dispatchEvent(new Event('change'));
+        }
+        
+        // 직업 선택
+        setTimeout(() => {
+            if (jobSelect) {
+                jobSelect.value = jobName;
+                jobSelect.dispatchEvent(new Event('change'));
+            }
+        }, 100);
+    } else {
+        // 학과를 찾을 수 없으면 직접 직업 정보 표시
+        renderCareerInformation(jobName, '');
+    }
+}
+
+function getFilteredScoresForEvent(eventName, gender) {
+    const rawData = getAllEventData(eventName, gender);
+    if (!rawData || rawData.length === 0) {
+        return [];
+    }
+    
+    let scores = rawData.map(item => item.score).filter(score => {
+        if (eventName === '10m_dash' && score > 20) {
+            return false;
+        }
+        return true;
+    });
+    
+    return removeOutliers(scores, eventName);
+}
+
+function getTopTenThreshold(eventName, gender) {
+    const filteredScores = getFilteredScoresForEvent(eventName, gender);
+    if (filteredScores.length === 0) {
+        return null;
+    }
+    
+    const percentileTarget = higherIsBetterEvents.includes(eventName) ? 90 : 10;
+    return calculatePercentile(filteredScores, percentileTarget);
 }
 
 // 평균 계산
@@ -662,6 +1408,8 @@ function createGenderComparisonChart(stats, currentFilter) {
     if (distributionChart) {
         distributionChart.destroy();
     }
+    chartMarkers.personal = null;
+    chartMarkers.top10 = null;
     
     const datasets = [];
     let labels = [];
@@ -750,6 +1498,8 @@ function createGenderComparisonChart(stats, currentFilter) {
             labels = histogram.labels;
         }
     }
+    
+    ensureChartMarkerPlugin();
     
     distributionChart = new Chart(ctx, {
         type: 'bar',
@@ -875,6 +1625,8 @@ function createDistributionChart(stats) {
     if (distributionChart) {
         distributionChart.destroy();
     }
+    chartMarkers.personal = null;
+    chartMarkers.top10 = null;
     
     const labels = ['25%', '50%', '75%', '90%', '95%'];
     const values = [
@@ -887,6 +1639,8 @@ function createDistributionChart(stats) {
     
     const genderText = stats.genderFilter === '전체' ? '전체' : `${stats.genderFilter}학생`;
     const chartTitle = `${eventDisplayNames[currentEvent]} (${genderText})`;
+    
+    ensureChartMarkerPlugin();
     
     distributionChart = new Chart(ctx, {
         type: 'bar',
@@ -1014,21 +1768,46 @@ function analyzePersonalScore() {
     }, 300);
 }
 
+function calculateRelativePosition(score, labelValues, avgBinSize) {
+    if (!labelValues || labelValues.length === 0 || isNaN(score)) {
+        return null;
+    }
+    
+    const barCount = labelValues.length;
+    let targetIndex = 0;
+    
+    for (let i = 0; i < barCount; i++) {
+        const binStart = labelValues[i];
+        const binEnd = (i < barCount - 1) ? labelValues[i + 1] : binStart + avgBinSize;
+        const isLast = i === barCount - 1;
+        
+        if (score <= labelValues[0]) {
+            targetIndex = 0;
+            break;
+        }
+        
+        if (score >= binStart && (score < binEnd || (isLast && score <= binEnd))) {
+            targetIndex = i;
+            break;
+        }
+        
+        if (score > binEnd && isLast) {
+            targetIndex = barCount - 1;
+        }
+    }
+    
+    return (targetIndex + 0.5) / barCount;
+}
+
 // 히스토그램에 개인 위치 표시
 function displayPersonalPositionOnChart(score, gender) {
     if (!distributionChart) {
         return;
     }
     
-    const canvas = document.getElementById('distributionChart');
-    if (!canvas) return;
-    
     setTimeout(() => {
         const labels = distributionChart.data.labels;
         if (!labels || labels.length === 0) return;
-        
-        const chartArea = distributionChart.chartArea;
-        if (!chartArea) return;
         
         // 라벨을 숫자로 변환
         const labelValues = labels.map(label => {
@@ -1036,7 +1815,7 @@ function displayPersonalPositionOnChart(score, gender) {
             return isNaN(num) ? null : num;
         }).filter(v => v !== null);
         
-        if (labelValues.length < 2) return;
+        if (labelValues.length === 0) return;
         
         // bin 크기 계산 (인접 라벨 간의 차이)
         const binSizes = [];
@@ -1046,58 +1825,40 @@ function displayPersonalPositionOnChart(score, gender) {
         const avgBinSize = binSizes.length > 0 ? 
             binSizes.reduce((a, b) => a + b, 0) / binSizes.length : 5;
         
-        // 첫 번째 라벨을 min으로 사용
-        const minValue = labelValues[0];
+        const personalRelative = calculateRelativePosition(score, labelValues, avgBinSize);
+        if (personalRelative === null) return;
         
-        // score가 어느 구간에 속하는지 찾기
-        let targetIndex = 0;
-        for (let i = 0; i < labelValues.length; i++) {
-            const binStart = labelValues[i];
-            const binEnd = (i < labelValues.length - 1) ? 
-                labelValues[i + 1] : binStart + avgBinSize;
-            
-            // 구간 범위 체크 (마지막 구간은 포함)
-            if (i === labelValues.length - 1) {
-                if (score >= binStart && score <= binEnd) {
-                    targetIndex = i;
-                    break;
-                }
+        const unit = unitMap[currentEvent] ? ` ${unitMap[currentEvent]}` : '';
+        const formattedScore = formatStatValue(score, currentEvent);
+        
+        chartMarkers.personal = {
+            relativeX: personalRelative,
+            color: 'rgba(255, 99, 132, 0.9)',
+            dash: [10, 5],
+            label: `내 기록: ${formattedScore}${unit}`,
+            labelColor: 'rgba(255, 99, 132, 1)'
+        };
+        
+        const topThreshold = getTopTenThreshold(currentEvent, gender);
+        if (topThreshold !== null) {
+            const topRelative = calculateRelativePosition(topThreshold, labelValues, avgBinSize);
+            if (topRelative !== null) {
+                const formattedTop = formatStatValue(topThreshold, currentEvent);
+                chartMarkers.top10 = {
+                    relativeX: topRelative,
+                    color: 'rgba(37, 99, 235, 0.95)',
+                    dash: [6, 6],
+                    label: `상위 10%선: ${formattedTop}${unit}`,
+                    labelColor: 'rgba(37, 99, 235, 1)'
+                };
             } else {
-                if (score >= binStart && score < binEnd) {
-                    targetIndex = i;
-                    break;
-                }
+                chartMarkers.top10 = null;
             }
+        } else {
+            chartMarkers.top10 = null;
         }
         
-        // 차트에서 X 위치 계산
-        const barCount = labels.length;
-        const chartWidth = chartArea.right - chartArea.left;
-        const barWidth = chartWidth / barCount;
-        const xPosition = chartArea.left + barWidth * targetIndex + barWidth / 2;
-        
-        // 개인 기록 마커 그리기
-        const ctx = canvas.getContext('2d');
-        
-        ctx.save();
-        ctx.strokeStyle = 'rgba(255, 99, 132, 0.8)';
-        ctx.lineWidth = 3;
-        ctx.setLineDash([10, 5]);
-        
-        ctx.beginPath();
-        ctx.moveTo(xPosition, chartArea.top);
-        ctx.lineTo(xPosition, chartArea.bottom);
-        ctx.stroke();
-        ctx.restore();
-        
-        // 텍스트 표시
-        ctx.save();
-        ctx.fillStyle = 'rgb(255, 99, 132)';
-        ctx.font = 'bold 14px Arial';
-        ctx.textAlign = 'left';
-        ctx.fillText(`내 기록: ${score}`, chartArea.left + 10, chartArea.top + 25);
-        ctx.restore();
-        
+        distributionChart.update('none');
     }, 200);
 }
 
